@@ -1,0 +1,54 @@
+$OpenBSD$
+
+Index: tikztosvg
+--- tikztosvg.orig
++++ tikztosvg
+@@ -137,19 +137,19 @@ TEMP_DIR="$(mktemp -d)"
+ TEX_FILE="$TEMP_DIR/tmp.tex"
+ 
+ # Generate the LaTeX document
+-printf "\documentclass[crop,tikz,multi=false]{standalone}\n" > "$TEX_FILE"
++printf "\\\documentclass[crop,tikz,multi=false]{standalone}\n" > "$TEX_FILE"
+ 
+ for PACKAGE in $PACKAGES
+ do
+-  printf "\usepackage{%s}\n" "$PACKAGE" >> "$TEX_FILE"
++  printf "\\\usepackage{%s}\n" "$PACKAGE" >> "$TEX_FILE"
+ done
+ 
+-printf "\\\begin{document} \huge\n" >> "$TEX_FILE"
++printf "\\\begin{document} \\\huge\n" >> "$TEX_FILE"
+ cat "$INPUT" >> "$TEX_FILE"
+ 
+ if [ $? -ne 0 ]
+ then
+-  rm "$TEMP_DIR" -r
++  rm -r "$TEMP_DIR"
+   error "File not found: $INPUT"
+ fi
+ 
+@@ -166,7 +166,7 @@ fi
+ S=$?
+ if [ $S -ne 0 ]
+ then
+-  rm "$TEMP_DIR" -r
++  rm -r "$TEMP_DIR"
+   if [ -z "$QUIET" ]
+   then
+     error "xelatex exited with code $S" $S
+@@ -185,7 +185,7 @@ pdf2svg "$TEMP_DIR/tmp.pdf" "$OUTPUT" 1
+ S=$?
+ if [ $S -ne 0 ]
+ then
+-  rm "$TEMP_DIR" -r
++  rm -r "$TEMP_DIR"
+   if [ -z "$QUIET" ]
+   then
+     error "pdf2svg exited with code $S" $S
+@@ -199,5 +199,5 @@ then
+   message "Done!"
+ fi
+ 
+-rm "$TEMP_DIR" -rf
++rm -rf "$TEMP_DIR"
+ 

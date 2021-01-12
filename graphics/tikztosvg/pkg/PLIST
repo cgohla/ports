@@ -1,0 +1,5 @@
+@comment $OpenBSD: PLIST,v$
+bin/tikztosvg
+@man man/man1/tikztosvg.1
+share/doc/tikztosvg-0.1.2/
+share/doc/tikztosvg-0.1.2/tikztosvg.pdf
