@@ -1,0 +1,2 @@
+The tikztosvg command renders TikZ diagrams to SVG, using xetex and
+pdf2svg.
